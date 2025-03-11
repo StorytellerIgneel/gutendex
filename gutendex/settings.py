@@ -23,11 +23,11 @@ env = environ.Env(
     MANAGER_EMAILS=(list, []),
     MANAGER_NAMES=(list, []),
 )
-environ.Env.read_env()
-
-
+env_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+environ.Env.read_env(env_file)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,7 +40,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
-
 
 # Application definition
 

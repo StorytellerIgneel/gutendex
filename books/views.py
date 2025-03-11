@@ -92,6 +92,18 @@ class BookViewSet(viewsets.ModelViewSet):
                     Q(authors__name__icontains=term) | Q(title__icontains=term)
                 )
 
+        search_string = self.request.GET.get('title')
+        if search_string is not None:
+            search_terms = search_string.split(' ')
+            for term in search_terms[:32]:
+                queryset = queryset.filter(Q(title__icontains=term))
+
+        search_author = self.request.GET.get('author')
+        if search_author is not None:
+            search_terms = search_author.split(' ')
+            for term in search_terms[:32]:
+                queryset = queryset.filter(Q(authors__name__icontains=term))
+
         topic = self.request.GET.get('topic')
         if topic is not None:
             queryset = queryset.filter(

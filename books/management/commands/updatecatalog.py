@@ -336,17 +336,12 @@ class Command(BaseCommand):
             log('  Replacing old catalog files...')
             with open(os.devnull, 'w') as null:
                 with open(LOG_PATH, 'a') as log_file:
-                    call(
-                        [
-                            'rsync',
-                            '-va',
-                            '--delete-after',
-                            MOVE_SOURCE_PATH + '/',
-                            MOVE_TARGET_PATH
-                        ],
-                        stdout=null,
-                        stderr=log_file
-                    )
+                    call([
+                        'robocopy',
+                        MOVE_SOURCE_PATH,
+                        MOVE_TARGET_PATH,
+                        '/MIR'
+                    ], stdout=null, stderr=log_file)
 
             log('  Putting the catalog in the database...')
             put_catalog_in_db()
